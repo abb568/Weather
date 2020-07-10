@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="weathericon">WeatherIcon</string>
+    <string name="_0_c">0°C</string>
+    <string name="location">Location</string>
+</resources>
