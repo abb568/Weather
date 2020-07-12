@@ -90,6 +90,9 @@ public class MapsActivity extends AppCompatActivity
 
         Update.setOnClickListener( new View.OnClickListener() {
             public void onClick(View v) {
+                if( CustomMarker != null) {
+                    CustomMarker.remove();
+                }
                 onMapReady(mGoogleMap);
                 Toast toast = Toast.makeText(getApplicationContext(),"Location and Weather Updated!",Toast.LENGTH_SHORT);
                 toast.show();
