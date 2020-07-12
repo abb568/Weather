@@ -24,6 +24,7 @@ package com.example.weather;
         import android.view.GestureDetector;
         import android.view.MotionEvent;
         import android.view.View;
+        import android.widget.Button;
         import android.widget.ImageView;
         import android.widget.TextView;
         import android.widget.Toast;
@@ -65,6 +66,7 @@ public class MapsActivity extends AppCompatActivity
     TextView CurrentTemp;
     TextView WeatherDesc;
     ImageView WeatherIcon;
+    Button Update;
     String LocationKey;
     String TemperatureValue;
     String WeatherText;
@@ -81,9 +83,18 @@ public class MapsActivity extends AppCompatActivity
         CurrentTemp = this.findViewById(R.id.CurrentTemp);
         WeatherIcon = this.findViewById(R.id.Icon);
         WeatherDesc = this.findViewById(R.id.WeatherDesc);
+        Update = this.findViewById(R.id.UpdateBtn);
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
 
+
+        Update.setOnClickListener( new View.OnClickListener() {
+            public void onClick(View v) {
+                onMapReady(mGoogleMap);
+                Toast toast = Toast.makeText(getApplicationContext(),"Location and Weather Updated!",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
 
     }
@@ -196,9 +207,8 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                                           String[] permissions, int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
@@ -215,9 +225,7 @@ public class MapsActivity extends AppCompatActivity
                     //toast to say application wont work
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                 }
-                return;
             }
-        }
     }
     private Bitmap makeBitMap(Drawable drawable) {
     //coverts drawable icon into bitmap
@@ -312,7 +320,7 @@ public class MapsActivity extends AppCompatActivity
                     JSONObject JSONTemperature = new JSONObject(Data.getString("Temperature"));
                     JSONObject JSONMetric = new JSONObject(JSONTemperature.getString("Metric"));
                     TemperatureValue = JSONMetric.getString("Value")+ "°";
-                    IconValue = ("w"+Data.getString("WeatherIcon"));;
+                    IconValue = ("w"+Data.getString("WeatherIcon"));
                     int id = getResources().getIdentifier(IconValue,"drawable",getPackageName());
                     Drawable draw = getResources().getDrawable(id);
                     WeatherIcon.setImageDrawable(draw);

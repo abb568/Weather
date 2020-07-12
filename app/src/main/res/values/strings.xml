@@ -4,4 +4,6 @@
     <string name="weathericon">WeatherIcon</string>
     <string name="_0_c">0°C</string>
     <string name="location">Location</string>
+    <string name="sunny">Sunny</string>
+    <string name="update">Update</string>
 </resources>
